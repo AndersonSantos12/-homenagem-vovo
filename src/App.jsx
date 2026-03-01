@@ -8,6 +8,7 @@ const fotos = [
   { src: '/fotos/foto2.jpg', alt: 'Família reunida', legenda: 'Família reunida em um momento especial' },
   { src: '/fotos/foto3.jpg', alt: 'Júlia Maria e filhos', legenda: 'Mais um momento de união familiar' },
   { src: '/fotos/foto4.jpg', alt: 'Júlia Maria', legenda: 'Júlia Maria, a homenageada' },
+  { src: '/fotos/foto5.jpg', alt: 'Júlia Maria', legenda: 'Júlia Maria em um momento especial' },
 ];
 
 function ElementoQuimico({ simbolo, nome, descricao }) {
