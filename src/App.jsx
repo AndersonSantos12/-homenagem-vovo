@@ -23,6 +23,7 @@ function FundoParticulasQuimicas() {
         <line x1="40" y1="30" x2="30" y2="45" stroke="#ffe0b2" strokeWidth="3" />
       </svg>
 
+
     </div>
   );
 }
