@@ -106,6 +106,7 @@ function FundoParticulasQuimicas() {
         }
       }}>Compartilhar contagem</button>
     </div>
+
   );
 }
 
@@ -116,7 +117,6 @@ const fotos = [
   { src: '/fotos/foto4.jpg', alt: 'Júlia Maria', legenda: 'Júlia Maria, a homenageada' },
   { src: '/fotos/foto5.jpg', alt: 'Júlia Maria', legenda: 'Júlia Maria em um momento especial' },
 ];
-
 function ElementoQuimico({ simbolo, nome, descricao }) {
   return (
     <div className="elemento-quimico">
