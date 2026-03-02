@@ -1,0 +1,38 @@
+name: Deploy Homenagem Site
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Instalar dependências (com cache)
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - run: npm ci
+
+      - name: Build do projeto
+        run: npm run build
+
+      # Exemplo para Vercel CLI (adicione seu token como secret VERCEL_TOKEN)
+      - name: Deploy para Vercel
+        run: npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }}
+
+      # Exemplo para Netlify CLI (adicione seu token como secret NETLIFY_AUTH_TOKEN)
+      # - name: Deploy para Netlify
+      #   run: npx netlify deploy --prod --dir=dist --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} --site ${{ secrets.NETLIFY_SITE_ID }}
