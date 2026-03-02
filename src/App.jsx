@@ -2,10 +2,60 @@
 
 import './App.css';
 import { useState, useRef, useEffect } from 'react';
+import Confetti from 'react-confetti';
+import { Fireworks } from 'fireworks-js/dist/react';
 function Countdown() {
   const targetDate = new Date('2026-03-08T00:00:00');
   const [timeLeft, setTimeLeft] = useState({days: 0, hours: 0, minutes: 0, seconds: 0});
   const [highlight, setHighlight] = useState(false);
+  const [showFireworks, setShowFireworks] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [phrase, setPhrase] = useState('');
+  const phrases = [
+    'Cada dia é um presente! 💝',
+    'Você é inspiração para todos nós!',
+    'Família é o maior tesouro.',
+    'Sorria, o grande dia está chegando!',
+    'A vida é feita de momentos especiais.',
+    'Gratidão por cada história vivida.',
+    'Seu amor nos une sempre!',
+    'Hoje é um novo capítulo de alegria!'
+  ];
+  // Avatar SVG simples
+  const avatar = (
+    <svg width="60" height="60" viewBox="0 0 60 60" className="avatar-animado">
+      <circle cx="30" cy="30" r="28" fill="#f7e9ff" stroke="#a97ff7" strokeWidth="2" />
+      <ellipse cx="30" cy="32" rx="14" ry="16" fill="#ffe0b2" />
+      <ellipse cx="30" cy="38" rx="10" ry="7" fill="#fff" />
+      <ellipse cx="24" cy="30" rx="2.5" ry="3" fill="#7a3a8a" />
+      <ellipse cx="36" cy="30" rx="2.5" ry="3" fill="#7a3a8a" />
+      <path d="M25 42 Q30 46 35 42" stroke="#a97ff7" strokeWidth="2" fill="none" />
+    </svg>
+  );
+
+  // Mensagem personalizada
+  function getCustomMessage() {
+    if (timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0) {
+      return 'Hoje é o grande dia! Parabéns Júlia Maria!';
+    } else if (timeLeft.days === 0 && timeLeft.hours < 24) {
+      return 'É amanhã! Prepare o coração!';
+    } else if (timeLeft.days <= 3) {
+      return 'Faltam poucos dias para celebrar!';
+    } else {
+      return `Faltam apenas ${timeLeft.days} dias para o aniversário de Júlia Maria!`;
+    }
+  }
+
+  // Efeito partículas químicas (bolhas animadas)
+  function ParticulasQuimicas() {
+    return (
+      <div className="particulas-quimicas">
+        {[...Array(12)].map((_, i) => (
+          <span key={i} className={`bolha bolha${i+1}`}></span>
+        ))}
+      </div>
+    );
+  }
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -21,7 +71,6 @@ function Countdown() {
         setTimeLeft({days: 0, hours: 0, minutes: 0, seconds: 0});
       }
     }, 1000);
-    // Animação de destaque
     setHighlight(true);
     setTimeout(() => setHighlight(false), 1200);
     return () => clearInterval(timer);
@@ -30,19 +79,50 @@ function Countdown() {
   useEffect(() => {
     setHighlight(true);
     const timeout = setTimeout(() => setHighlight(false), 800);
+    // Frase motivacional do dia
+    const dia = new Date().getDate() % phrases.length;
+    setPhrase(phrases[dia]);
+    // Confete e fogos no dia do aniversário
+    if (timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0) {
+      setShowFireworks(true);
+      setShowConfetti(true);
+    } else {
+      setShowFireworks(false);
+      setShowConfetti(false);
+    }
     return () => clearTimeout(timeout);
   }, [timeLeft]);
 
   return (
-    <div className={`countdown-container destaque ${highlight ? 'pulse' : ''}`}>
-      <span className="countdown-emoji">🎉</span>
-      <span className="countdown-title">Faltam apenas <span className="countdown-days">{timeLeft.days} dias</span> para o aniversário de Júlia Maria!</span>
+    <div className={`countdown-container destaque ${highlight ? 'pulse' : ''}`}
+      style={{position:'relative', overflow:'visible'}}>
+      {showConfetti && <Confetti width={window.innerWidth} height={window.innerHeight} recycle={false} numberOfPieces={400} />} 
+      {showFireworks && <Fireworks options={{rocketsPoint: {min: 0, max: 100}}} style={{top:0, left:0, width:'100vw', height:'100vh', position:'fixed', zIndex:1000}} />} 
+      <ParticulasQuimicas />
+      <div style={{display:'flex', alignItems:'center', justifyContent:'center', gap:'1em'}}>
+        {avatar}
+        <span className="countdown-emoji">🎉</span>
+      </div>
+      <span className="countdown-title">{getCustomMessage()}</span>
       <div className="countdown-numbers">
         <span>{timeLeft.days.toString().padStart(2, '0')}</span> : <span>{timeLeft.hours.toString().padStart(2, '0')}</span> : <span>{timeLeft.minutes.toString().padStart(2, '0')}</span> : <span>{timeLeft.seconds.toString().padStart(2, '0')}</span>
       </div>
       <div className="countdown-labels">
         <span>Dias</span> <span>Horas</span> <span>Min</span> <span>Seg</span>
       </div>
+      <div className="frase-motivacional">{phrase}</div>
+      <button className="btn-compartilhar" onClick={() => {
+        if (navigator.share) {
+          navigator.share({
+            title: 'Homenagem à Júlia Maria',
+            text: 'Veja esta homenagem especial para Júlia Maria!',
+            url: window.location.href
+          });
+        } else {
+          navigator.clipboard.writeText(window.location.href);
+          alert('Link copiado! Agora é só colar e compartilhar.');
+        }
+      }}>Compartilhar contagem</button>
     </div>
   );
 }

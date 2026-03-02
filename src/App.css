@@ -1,3 +1,68 @@
+.particulas-quimicas {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+.bolha {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.5;
+  animation: bolha-flutua 6s infinite linear;
+}
+.bolha1 { width: 18px; height: 18px; background: #a97ff7; left: 10%; top: 60%; animation-delay: 0s; }
+.bolha2 { width: 12px; height: 12px; background: #e67e22; left: 80%; top: 30%; animation-delay: 1s; }
+.bolha3 { width: 10px; height: 10px; background: #7a3a8a; left: 50%; top: 80%; animation-delay: 2s; }
+.bolha4 { width: 14px; height: 14px; background: #f7e9ff; left: 70%; top: 60%; animation-delay: 3s; }
+.bolha5 { width: 16px; height: 16px; background: #ffe0b2; left: 30%; top: 20%; animation-delay: 4s; }
+.bolha6 { width: 11px; height: 11px; background: #3a3a6a; left: 60%; top: 10%; animation-delay: 5s; }
+.bolha7 { width: 13px; height: 13px; background: #a97ff7; left: 20%; top: 40%; animation-delay: 2.5s; }
+.bolha8 { width: 9px; height: 9px; background: #e67e22; left: 40%; top: 70%; animation-delay: 1.5s; }
+.bolha9 { width: 15px; height: 15px; background: #7a3a8a; left: 85%; top: 80%; animation-delay: 3.5s; }
+.bolha10 { width: 10px; height: 10px; background: #f7e9ff; left: 60%; top: 50%; animation-delay: 0.5s; }
+.bolha11 { width: 12px; height: 12px; background: #ffe0b2; left: 15%; top: 10%; animation-delay: 2.2s; }
+.bolha12 { width: 14px; height: 14px; background: #3a3a6a; left: 75%; top: 15%; animation-delay: 4.2s; }
+@keyframes bolha-flutua {
+  0% { transform: translateY(0) scale(1); opacity: 0.5; }
+  50% { opacity: 0.8; }
+  100% { transform: translateY(-60px) scale(1.2); opacity: 0.2; }
+}
+
+.avatar-animado {
+  animation: avatar-bounce 2.5s infinite alternate;
+  margin-right: 0.5em;
+}
+@keyframes avatar-bounce {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-8px); }
+}
+
+.frase-motivacional {
+  margin-top: 1em;
+  font-size: 1.1em;
+  color: #e67e22;
+  font-weight: 600;
+  text-shadow: 0 2px 8px #fff7;
+  animation: fadeIn 1.2s;
+}
+
+.btn-compartilhar {
+  margin-top: 1.2em;
+  background: linear-gradient(90deg, #a97ff7 60%, #e67e22 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7em 1.5em;
+  font-size: 1.1em;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(120, 60, 120, 0.13);
+  transition: background 0.3s, transform 0.2s;
+}
+.btn-compartilhar:hover {
+  background: linear-gradient(90deg, #e67e22 60%, #a97ff7 100%);
+  transform: scale(1.05);
+}
 .fade-in {
   opacity: 0;
   animation: fadeIn 1.2s ease-in forwards;
